@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">TraceroutePing</string>
+    <string name="action_settings">Settings</string>
+    <string name="hello_world">Hello world!</string>
+    <string name="activity_button">Launch</string>
+    <string name="no_connectivity">No connectivity</string>
+    <string name="no_text">Please enter an ip or URL</string>
+    <string name="no_ping">Are you sure about the URL?</string>
+    <string name="string_test">test</string>
+    <string name="error">An error occurred, please try again</string>
+    <string name="timeout">Timeout</string>
+    <string name="placeholder">www.google.fr</string>
+
+</resources>

@@ -1,0 +1,47 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    tools:context=".TraceActivity" >
+
+    <EditText
+        android:id="@+id/editTextPing"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:hint="@string/placeholder"
+        android:inputType="text"
+        android:ems="10" />
+
+    <Button
+        android:id="@+id/buttonLaunch"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/editTextPing"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="15dp"
+        android:text="@string/activity_button" />
+
+    <ListView
+        android:id="@+id/listViewTraceroute"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/buttonLaunch"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="15dp" >
+    </ListView>
+
+    <ProgressBar
+        android:id="@+id/progressBarPing"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/listViewTraceroute"
+        android:layout_toRightOf="@+id/buttonLaunch"
+        android:visibility="gone" />
+
+</RelativeLayout>
