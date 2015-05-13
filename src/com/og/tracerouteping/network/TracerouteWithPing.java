@@ -136,7 +136,7 @@ public class TracerouteWithPing {
 			super.onPostExecute(result);
 		}
 	}
-
+	
 	/**
 	 * The task that ping an ip, with increasing time to live (ttl) value
 	 */
@@ -181,8 +181,9 @@ public class TracerouteWithPing {
 
 					// Store the TracerouteContainer object
 					Log.d(TraceActivity.tag, trace.toString());
-					traces.add(trace);
-
+					
+					context.refreshList(trace);
+					
 					return res;
 				} catch (final Exception e) {
 					context.runOnUiThread(new Runnable() {
@@ -261,7 +262,7 @@ public class TracerouteWithPing {
 						} else {
 							Log.d(TraceActivity.tag, result);
 
-							if (traces.get(traces.size() - 1).getIp().equals(ipToPing)) {
+							if (traces.size() > 0 && traces.get(traces.size() - 1).getIp().equals(ipToPing)) {
 								if (ttl < maxTtl) {
 									ttl = maxTtl;
 									traces.remove(traces.size() - 1);
@@ -275,8 +276,7 @@ public class TracerouteWithPing {
 									new ExecutePingAsyncTask(maxTtl).execute();
 								}
 							}
-
-							context.refreshList(traces);
+//							context.refreshList(traces);
 						}
 					}
 					finishedTasks++;

@@ -94,6 +94,8 @@ public class TraceActivity extends Activity {
 				if (editTextPing.getText().length() == 0) {
 					Toast.makeText(TraceActivity.this, getString(R.string.no_text), Toast.LENGTH_SHORT).show();
 				} else {
+					traces.clear();
+					traceListAdapter.notifyDataSetChanged();
 					startProgressBar();
 					hideSoftwareKeyboard(editTextPing);
 					tracerouteWithPing.executeTraceroute(editTextPing.getText().toString(), maxTtl);
@@ -111,9 +113,15 @@ public class TraceActivity extends Activity {
 	 * @param traces
 	 *            The list of traces to refresh
 	 */
-	public void refreshList(List<TracerouteContainer> traces) {
-		this.traces = traces;
-		traceListAdapter.notifyDataSetChanged();
+	public void refreshList(TracerouteContainer trace) {
+		final TracerouteContainer fTrace = trace;
+        runOnUiThread(new Runnable() {
+			@Override
+			public void run() {
+				traces.add(fTrace);
+				traceListAdapter.notifyDataSetChanged();
+			}
+		});
 	}
 
 	/**
