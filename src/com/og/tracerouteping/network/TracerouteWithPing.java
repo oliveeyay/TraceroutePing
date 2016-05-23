@@ -223,6 +223,7 @@ public class TracerouteWithPing {
 			Log.d(TraceActivity.tag, "Will launch : " + command + url);
 
 			long startTime = System.nanoTime();
+			elapsedTime = 0;
 			// timeout task
 			new TimeOutAsyncTask(this, ttl).execute();
 			// Launch command
