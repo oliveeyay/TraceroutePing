@@ -53,7 +53,7 @@ public class TracerouteWithPing {
 	private static final String EXCEED_PING = "exceed";
 	private static final String UNREACHABLE_PING = "100%";
 
-	private List<TracerouteContainer> traces;
+	private TracerouteContainer latestTrace;
 	private int ttl;
 	private int finishedTasks;
 	private String urlToPing;
@@ -82,7 +82,6 @@ public class TracerouteWithPing {
 		this.ttl = 1;
 		this.finishedTasks = 0;
 		this.urlToPing = url;
-		this.traces = new ArrayList<TracerouteContainer>();
 
 		new ExecutePingAsyncTask(maxTtl).execute();
 	}
@@ -176,7 +175,8 @@ public class TracerouteWithPing {
 					String hostname = inetAddr.getHostName();
 					String canonicalHostname = inetAddr.getCanonicalHostName();
 					trace.setHostname(hostname);
-					Log.d(TraceActivity.tag, "hostname : " + hostname);
+                                       latestTrace = trace;
+                                       Log.d(TraceActivity.tag, "hostname : " + hostname);
 					Log.d(TraceActivity.tag, "canonicalHostname : " + canonicalHostname);
 
 					// Store the TracerouteContainer object
@@ -262,10 +262,9 @@ public class TracerouteWithPing {
 						} else {
 							Log.d(TraceActivity.tag, result);
 
-							if (traces.size() > 0 && traces.get(traces.size() - 1).getIp().equals(ipToPing)) {
+							if (latestTrace != null && latestTrace.getIp().equals(ipToPing)) {
 								if (ttl < maxTtl) {
 									ttl = maxTtl;
-									traces.remove(traces.size() - 1);
 									new ExecutePingAsyncTask(maxTtl).execute();
 								} else {
 									context.stopProgressBar();
