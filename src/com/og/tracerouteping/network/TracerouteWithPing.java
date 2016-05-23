@@ -158,14 +158,15 @@ public class TracerouteWithPing {
 					String res = launchPing(urlToPing);
 
 					TracerouteContainer trace;
+                    			String ip = parseIpFromPing(res);
 
 					if (res.contains(UNREACHABLE_PING) && !res.contains(EXCEED_PING)) {
 						// Create the TracerouteContainer object when ping
 						// failed
-						trace = new TracerouteContainer("", parseIpFromPing(res), elapsedTime, false);
+						trace = new TracerouteContainer("", ip, elapsedTime, false);
 					} else {
 						// Create the TracerouteContainer object when succeed
-						trace = new TracerouteContainer("", parseIpFromPing(res), ttl == maxTtl ? Float.parseFloat(parseTimeFromPing(res))
+						trace = new TracerouteContainer("", ip, ttl == maxTtl ? Float.parseFloat(parseTimeFromPing(res))
 								: elapsedTime, true);
 					}
 
@@ -181,9 +182,13 @@ public class TracerouteWithPing {
 
 					// Store the TracerouteContainer object
 					Log.d(TraceActivity.tag, trace.toString());
-					
-					context.refreshList(trace);
-					
+
+                    			// Not refresh list if this ip is the final ip but the ttl is not maxTtl
+                    			// this row will be inserted later
+                    			if (!ip.equals(ipToPing) || ttl == maxTtl) {
+                        			context.refreshList(trace);
+                    			}
+
 					return res;
 				} catch (final Exception e) {
 					context.runOnUiThread(new Runnable() {
